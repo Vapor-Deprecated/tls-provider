@@ -4,6 +4,8 @@ import Socks
 import SocksCore
 import SecretSocks
 
+public var 🔒: Provider { return Provider(modes: .client) }
+
 /**
     A provider that allows SSL Client and or Server
 */
