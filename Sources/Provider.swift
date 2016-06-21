@@ -4,7 +4,7 @@ import Socks
 import SocksCore
 import SecretSocks
 
-public var 🔒: Provider { return Provider(modes: .client) }
+public func 🔒(_ modes: Provider.Mode) -> Provider { return Provider(modes: modes) }
 
 /**
     A provider that allows SSL Client and or Server
@@ -34,6 +34,10 @@ public struct Provider: Vapor.Provider {
     }
 
     public init(modes: Mode...) {
+        self.init(modes: modes)
+    }
+
+    public init(modes: [Mode]) {
         self.modes = Set(modes)
     }
 
