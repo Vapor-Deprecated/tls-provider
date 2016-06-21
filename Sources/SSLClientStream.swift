@@ -10,7 +10,10 @@ import SecretSocks
 public struct SSLClientStream: ClientStream {
     public init() {}
     public static func makeConnection(host: String, port: Int, secure: Bool) throws -> Stream {
-        guard secure else { return try TCPClient.makeConnection(host: host, port: port, secure: false) }
+        guard secure else { 
+            return try TCPClient.makeConnection(host: host, port: port, secure: false) 
+        }
+        
         let port = UInt16(port)
         let address = InternetAddress(hostname: host, port: port)
 
