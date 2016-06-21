@@ -6,12 +6,7 @@ import Vapor
 */
 extension SSL.Socket: Vapor.Stream {
     // Timeout not supported
-    public var timeout: Double {
-        get {
-            return 0
-        }
-        set {}
-    }
+    public func setTimeout(_ timeout: Double) throws {}
 
     public var closed: Bool {
         return false

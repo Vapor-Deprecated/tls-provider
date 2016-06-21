@@ -21,14 +21,14 @@ public struct Provider: Vapor.Provider {
     */
     public let modes: Set<Mode>
 
-    public var client: HTTPClientProtocol? {
+    public var client: Client.Type? {
         guard modes.contains(.client) else { return nil }
-        return HTTPClient<SSLClientStream>()
+        return HTTPClient<SSLClientStream>.self
     }
 
-    public var server: ServerDriver.Type? {
+    public var server: Server.Type? {
         guard modes.contains(.server) else { return nil }
-        return HTTPServer<SSLStreamDriver, HTTPParser<HTTPRequest>, HTTPSerializer<HTTPResponse>>.self
+        return HTTPServer<SSLServerStream, HTTPParser<HTTPRequest>, HTTPSerializer<HTTPResponse>>.self
     }
 
     public init(modes: Mode...) {
