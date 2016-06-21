@@ -13,7 +13,13 @@ public struct SSLClientStream: ClientStream {
         guard secure else { return try TCPClient.makeConnection(host: host, port: port, secure: false) }
         let port = UInt16(port)
         let address = InternetAddress(hostname: host, port: port)
+
         let socket = try TCPInternetSocket(address: address)
-        return try socket.makeSecret(mode: .client)
+        try socket.connect()
+
+        let secureSocket = try socket.makeSecret(mode: .client)
+        try secureSocket.connect()
+
+        return secureSocket
     }
 }

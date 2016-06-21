@@ -1,6 +1,6 @@
 import XCTest
-@testable import vapor-sslTestSuite
+@testable import VaporSSLTestSuite
 
 XCTMain([
-     testCase(vapor-sslTests.allTests),
+     testCase(SSLClientStreamTests.allTests),
 ])
