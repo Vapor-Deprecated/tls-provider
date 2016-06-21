@@ -12,9 +12,11 @@ public struct SSLStreamDriver: StreamDriver {
         let port = UInt16(port)
         let address = InternetAddress(hostname: host, port: port)
         let server = try SynchronousTCPServer(address: address)
-        try server.startWithHandler { unsecure in
-            let secured = try unsecure.socket.makeSecret(mode: .server)
-            try handler(secured)
+        try server.startWithHandler { socket in
+            let secureSocket = try socket.socket.makeSecret(mode: .server)
+            try secureSocket.accept()
+
+            try handler(secureSocket)
         }
     }
 }
