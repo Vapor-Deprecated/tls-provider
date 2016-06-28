@@ -7,22 +7,17 @@ import SecretSocks
 /**
     Establish a secure SSL/TLS connection to a remote server
 */
-public struct SSLClientStream: ClientStream {
-    public init() {}
-    public static func makeConnection(host: String, port: Int, secure: Bool) throws -> Stream {
-        guard secure else { 
-            return try TCPClient.makeConnection(host: host, port: port, secure: false) 
+public final class SSLClientStream: TCPProgramStream, ClientStream {
+
+    public func connect() throws -> Stream {
+        try stream.connect()
+        switch securityLayer {
+        case .none:
+            return stream
+        case .tls:
+            let secure = try stream.makeSecret(mode: .client)
+            try secure.connect()
+            return secure
         }
-        
-        let port = UInt16(port)
-        let address = InternetAddress(hostname: host, port: port)
-
-        let socket = try TCPInternetSocket(address: address)
-        try socket.connect()
-
-        let secureSocket = try socket.makeSecret(mode: .client)
-        try secureSocket.connect()
-
-        return secureSocket
     }
 }
