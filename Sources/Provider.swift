@@ -1,10 +1,10 @@
-import SSL
+import TLS
 import Vapor
 import Socks
 import SocksCore
 import SecretSocks
 
-public func 🔒(_ modes: Provider.Mode) -> Provider { return Provider(modes: modes) }
+public func 🔒(_ modes: Provider.Mode...) -> Provider { return Provider(modes: modes) }
 
 /**
     A provider that allows SSL Client and or Server
@@ -25,19 +25,19 @@ public struct Provider: Vapor.Provider {
 
     public var client: Client.Type? {
         guard modes.contains(.client) else { return nil }
-        return HTTPClient<SSLClientStream>.self
+        return HTTPClient<TLSClientStream>.self
     }
 
     public var server: Server.Type? {
         guard modes.contains(.server) else { return nil }
-        return HTTPServer<SSLServerStream, HTTPParser<HTTPRequest>, HTTPSerializer<HTTPResponse>>.self
+        return HTTPServer<TLSServerStream, HTTPParser<HTTPRequest>, HTTPSerializer<HTTPResponse>>.self
     }
 
     public init(modes: Mode...) {
         self.init(modes: modes)
     }
 
-    public init(modes: [Mode]) {
+    public init(modes: [Mode] = [.client]) {
         self.modes = Set(modes)
     }
 

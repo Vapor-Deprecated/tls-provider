@@ -1,14 +1,14 @@
 import XCTest
-@testable import VaporSSL
+@testable import VaporTLS
 
-class SSLClientStreamTests: XCTestCase {
+class TLSClientStreamTests: XCTestCase {
     static var allTests = [
         ("testSend", testSend)
     ]
 
     func testSend() {
         do {
-            let clientStream = try SSLClientStream.init(host: "api.spotify.com", port: 443, securityLayer: .tls).connect()
+            let clientStream = try TLSClientStream.init(host: "api.spotify.com", port: 443, securityLayer: .tls).connect()
             let uri = "/v1/search?type=artist&q=hannah%20diamond"
             try clientStream.send("GET \(uri) HTTP/1.1\r\nHost: api.spotify.com\r\n\r\n".bytes)
             let response = try clientStream.receive(max: 2048).string

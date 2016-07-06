@@ -1,6 +1,6 @@
 import XCTest
-@testable import VaporSSLTestSuite
+@testable import VaporTLSTestSuite
 
 XCTMain([
-     testCase(SSLClientStreamTests.allTests),
+     testCase(TLSClientStreamTests.allTests),
 ])

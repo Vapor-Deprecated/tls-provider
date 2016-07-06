@@ -1,10 +1,10 @@
-import SSL
+import TLS
 import Vapor
 
 /*
     Incomplete conformance of SSL.Socket. Will be updating with more thorough support
 */
-extension SSL.Socket: Vapor.Stream {
+extension TLS.Socket: Vapor.Stream {
     // Timeout not supported
     public func setTimeout(_ timeout: Double) throws {}
 

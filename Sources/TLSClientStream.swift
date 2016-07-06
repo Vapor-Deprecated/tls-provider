@@ -1,4 +1,4 @@
-import SSL
+import TLS
 import Vapor
 import Socks
 import SocksCore
@@ -7,7 +7,7 @@ import SecretSocks
 /**
     Establish a secure SSL/TLS connection to a remote server
 */
-public final class SSLClientStream: TCPProgramStream, ClientStream {
+public final class TLSClientStream: TCPProgramStream, ClientStream {
 
     public func connect() throws -> Stream {
         try stream.connect()
