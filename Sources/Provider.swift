@@ -1,8 +1,6 @@
 import TLS
 import Vapor
-import Socks
-import SocksCore
-import SecretSocks
+import Engine
 
 public func 🔒(_ modes: Provider.Mode...) -> Provider { return Provider(modes: modes) }
 
@@ -25,12 +23,12 @@ public struct Provider: Vapor.Provider {
 
     public var client: Client.Type? {
         guard modes.contains(.client) else { return nil }
-        return HTTPClient<TLSClientStream>.self
+        return Engine.HTTPClient<TLSClientStream>.self
     }
 
     public var server: Server.Type? {
         guard modes.contains(.server) else { return nil }
-        return HTTPServer<TLSServerStream, HTTPParser<HTTPRequest>, HTTPSerializer<HTTPResponse>>.self
+        return Engine.HTTPServer<TLSServerStream, HTTPParser<HTTPRequest>, HTTPSerializer<HTTPResponse>>.self
     }
 
     public init(modes: Mode...) {
@@ -41,5 +39,5 @@ public struct Provider: Vapor.Provider {
         self.modes = Set(modes)
     }
 
-    public func boot(with application: Application) {}
+    public func boot(with droplet: Droplet) {}
 }

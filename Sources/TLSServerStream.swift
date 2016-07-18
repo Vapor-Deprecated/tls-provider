@@ -1,8 +1,5 @@
 import TLS
-import Vapor
-import Socks
-import SocksCore
-import SecretSocks
+import Engine
 
 /**
     Establish a secure SSL/TLS connection to a remote client
