@@ -1,7 +1,5 @@
 import TLS
-import Vapor
-import Socks
-import SocksCore
+import Engine
 import SecretSocks
 
 /**

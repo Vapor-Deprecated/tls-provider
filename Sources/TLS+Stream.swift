@@ -1,10 +1,10 @@
 import TLS
-import Vapor
+import protocol Engine.Stream
 
 /*
     Incomplete conformance of SSL.Socket. Will be updating with more thorough support
 */
-extension TLS.Socket: Vapor.Stream {
+extension TLS.Socket: Engine.Stream {
     // Timeout not supported
     public func setTimeout(_ timeout: Double) throws {}
 
