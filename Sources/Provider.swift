@@ -45,10 +45,10 @@ public struct Provider: Vapor.Provider {
             .flatMap { Mode(rawValue: $0) }
         
         if modes.isEmpty {
-            self.init(modes: modes)
+            self.init()
             
         } else {
-            self.init()
+            self.init(modes: modes)
         }
     }
     
