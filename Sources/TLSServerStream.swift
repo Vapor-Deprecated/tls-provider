@@ -1,5 +1,6 @@
 import TLS
-import Engine
+import HTTP
+import Transport
 
 /**
     Establish a secure SSL/TLS connection to a remote client

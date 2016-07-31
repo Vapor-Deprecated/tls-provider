@@ -1,10 +1,10 @@
 import TLS
-import protocol Engine.Stream
+import protocol Transport.Stream
 
 /*
     Incomplete conformance of SSL.Socket. Will be updating with more thorough support
 */
-extension TLS.Socket: Engine.Stream {
+extension TLS.Socket: Stream {
     // Timeout not supported
     public func setTimeout(_ timeout: Double) throws {}
 

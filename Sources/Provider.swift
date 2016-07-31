@@ -1,6 +1,6 @@
 import TLS
 import Vapor
-import Engine
+import HTTP
 
 public func 🔒(_ modes: Provider.Mode...) -> Provider { return Provider(modes: modes) }
 
@@ -12,7 +12,7 @@ public struct Provider: Vapor.Provider {
          Which modes to enable. It's very common that applications will serve behind nginx and use
          ssl only for outgoing calls.
      */
-    public enum Mode {
+    public enum Mode: String {
         case client, server
     }
 
@@ -21,16 +21,16 @@ public struct Provider: Vapor.Provider {
     */
     public let modes: Set<Mode>
 
-    public var client: Client.Type? {
+    public var client: ClientProtocol.Type? {
         guard modes.contains(.client) else { return nil }
-        return Engine.HTTPClient<TLSClientStream>.self
+        return Client<TLSClientStream>.self
     }
 
-    public var server: Server.Type? {
+    public var server: ServerProtocol.Type? {
         guard modes.contains(.server) else { return nil }
-        return Engine.HTTPServer<TLSServerStream, HTTPParser<HTTPRequest>, HTTPSerializer<HTTPResponse>>.self
+        return Server<TLSServerStream, Parser<Request>, Serializer<Response>>.self
     }
-
+    
     public init(modes: Mode...) {
         self.init(modes: modes)
     }
@@ -38,6 +38,29 @@ public struct Provider: Vapor.Provider {
     public init(modes: [Mode] = [.client]) {
         self.modes = Set(modes)
     }
-
-    public func boot(with droplet: Droplet) {}
+    
+    public init(config: Config) throws {
+        let modes = (config["tls", "modes"]?.array ?? [])
+            .flatMap { $0.string }
+            .flatMap { Mode(rawValue: $0) }
+        
+        if modes.isEmpty {
+            self.init()
+            
+        } else {
+            self.init(modes: modes)
+        }
+    }
+    
+    public var provided: Providable {
+        return Providable(
+            server: self.server,
+            client: self.client
+        )
+    }
+    
+    public func afterInit(_: Droplet) { }
+    public func beforeServe(_: Droplet) { }
 }
+
+

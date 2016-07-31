@@ -1,6 +1,7 @@
 import TLS
-import Engine
+import HTTP
 import SecretSocks
+import Transport
 
 /**
     Establish a secure SSL/TLS connection to a remote server
