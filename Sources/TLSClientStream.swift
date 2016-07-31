@@ -6,8 +6,7 @@ import Transport
 /**
     Establish a secure SSL/TLS connection to a remote server
 */
-public final class TLSClientStream: TCPProgramStream, ClientStream {
-
+public class TLSClientStream: TCPProgramStream, ClientStream {
     public func connect() throws -> Stream {
         try stream.connect()
         switch securityLayer {

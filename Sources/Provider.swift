@@ -45,8 +45,8 @@ public struct Provider: Vapor.Provider {
             .flatMap { Mode(rawValue: $0) }
         
         if modes.isEmpty {
+            print("No modes provided in config for VaporTLS")
             self.init()
-            
         } else {
             self.init(modes: modes)
         }
